@@ -330,7 +330,7 @@ const vld=(r,knownAisles)=>{
   if(!r?.trim())return{e:"Required",t:"err"};
   const s=r.toUpperCase().trim();
   const p=s.split("-");
-  if(p.length<2)return{e:"Need at least AISLE-BAY format with dashes",t:"err"};
+  if(p.length<3)return{e:"Need 3 parts: AISLE-BAY-POS (e.g. W10-Q01-03)",t:"err"};
   if(p.length>3)return{e:"Too many parts - max is AISLE-BAY-POS",t:"err"};
   // Bay validation: 1-2 letters + 1-2 digits
   if(p.length>=2 && !/^[A-Z]{1,2}\d{1,3}$/.test(p[1]))return{e:"Bay '"+p[1]+"' invalid. Need 1-2 letters + 1-3 digits (B01, C4, AA1, Q11)",t:"err"};
@@ -669,7 +669,7 @@ export default function App(){
         <div style={{overflowX:"auto",borderRadius:8,border:"1px solid #e5e7eb"}}>
           <table style={{width:"100%",borderCollapse:"collapse",fontSize:12}}>
             <thead><tr style={{background:"#f9fafb"}}>
-              {["WH","Location","Zone","Aisle","Class","Type","L","W","H","Volume"].map(h=><th key={h} style={{padding:"10px 10px",textAlign:"left",fontWeight:700,color:"#374151",borderBottom:"2px solid #e5e7eb",whiteSpace:"nowrap",fontFamily:font}}>{h}</th>)}
+              {["WH","Location","Zone","Aisle","Class","Type","Pick Flow","L","W","H","Volume"].map(h=><th key={h} style={{padding:"10px 10px",textAlign:"left",fontWeight:700,color:"#374151",borderBottom:"2px solid #e5e7eb",whiteSpace:"nowrap",fontFamily:font}}>{h}</th>)}
             </tr></thead>
             <tbody>{fl.map((l,i)=>(
               <tr key={l.id} style={{background:i%2===0?"#fff":"#f9fafb"}} onMouseEnter={e=>e.currentTarget.style.background="#f0f9ff"} onMouseLeave={e=>e.currentTarget.style.background=i%2===0?"#fff":"#f9fafb"}>
@@ -679,6 +679,7 @@ export default function App(){
                 <td style={{padding:"8px 10px",borderBottom:"1px solid #f3f4f6"}}>{l.a}</td>
                 <td style={{padding:"8px 10px",fontFamily:mono,fontSize:11,borderBottom:"1px solid #f3f4f6"}}>{l.c}</td>
                 <td style={{padding:"8px 10px",borderBottom:"1px solid #f3f4f6"}}>{l.t}</td>
+                <td style={{padding:"8px 10px",fontFamily:mono,fontSize:10,borderBottom:"1px solid #f3f4f6"}}>{l.pf}</td>
                 <td style={{padding:"8px 10px",fontFamily:mono,textAlign:"right",borderBottom:"1px solid #f3f4f6"}}>{l.l}</td>
                 <td style={{padding:"8px 10px",fontFamily:mono,textAlign:"right",borderBottom:"1px solid #f3f4f6"}}>{l.w}</td>
                 <td style={{padding:"8px 10px",fontFamily:mono,textAlign:"right",borderBottom:"1px solid #f3f4f6"}}>{l.h}</td>
