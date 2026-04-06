@@ -406,9 +406,6 @@ export default function App(){
   const sT=hasN?nbrs[0].t:"I";
   const zone=ovr?mZ:(sZ||"");
   const pf=ovr?mP:(sPf||"");
-  const btw=hasN&&!isBinLoc?nbrs.reduce((s,l)=>s+l.w,0):null;
-  const npc=nbrs.length+1;
-  const nw=btw?Math.round(btw/npc*100)/100:null;
   // Bin subdivision detection (01A, 01B, 01C = dividers splitting LENGTH)
   const isBinLoc=isBin(up);
   const bBase=isBinLoc?binBase(up):null;
@@ -417,6 +414,10 @@ export default function App(){
   const binTotalLen=hasBin?binNbrs.reduce((s,l)=>s+l.l,0):null;
   const binCount=binNbrs.length+1;
   const newLen=binTotalLen?Math.round(binTotalLen/binCount*100)/100:null;
+  // Beam width recalc (skip for bin subdivisions - they only change length)
+  const btw=hasN&&!isBinLoc?nbrs.reduce((s,l)=>s+l.w,0):null;
+  const npc=nbrs.length+1;
+  const nw=btw?Math.round(btw/npc*100)/100:null;
   const fCls=aisle?allCls.filter(c=>c.a.includes(aisle)||c.a.length===0):allCls;
 
   const prev=useRef(null);
